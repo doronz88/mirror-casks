@@ -6,7 +6,7 @@ import click
 import requests
 from plumbum import FG, local
 
-PACKAGES = ['pycharm-ce', 'emacs', 'sublime-text']
+PACKAGES = ['pycharm-ce', 'emacs', 'sublime-text', 'rectangle', 'proxyman', 'flycut']
 
 wget = local['wget']
 
