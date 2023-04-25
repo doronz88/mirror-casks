@@ -21,9 +21,10 @@ def download_cask_rb(name: str) -> str:
 
 @click.command()
 @click.argument('output', type=click.Path())
-@click.option('--prefix', default='')
-@click.option('--new-url-base', default='PATCHED_BASE')
+@click.option('--prefix', default='', help='prefix downloaded packages')
+@click.option('--new-url-base', default='PATCHED_BASE', help='what to replace the original URL base with')
 def cli(output: str, prefix: str, new_url_base: str):
+    """ Python3 utility for mirroring brew casks """
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     for package_name in PACKAGES:
