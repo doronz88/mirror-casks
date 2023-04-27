@@ -8,7 +8,10 @@ from plumbum import FG, local
 
 PACKAGES = ['pycharm-ce', 'emacs', 'sublime-text', 'rectangle', 'proxyman', 'flycut', 'wireshark', 'google-chrome',
             'firefox', 'drawio', 'audacity', 'microsoft-remote-desktop', 'vlc', 'cheatsheet', 'vmware-fusion',
-            'db-browser-for-sqlite', 'iterm2', 'docker', 'ghidra', 'charles', 'appcode', 'pycharm']
+            'db-browser-for-sqlite', 'iterm2', 'docker', 'ghidra', 'charles', 'appcode', 'pycharm', 'webstorm',
+            'typora']
+
+ASSETS_DIR = 'assets'
 
 wget = local['wget']
 
@@ -33,6 +36,34 @@ def cli(output: str, prefix: str, new_url_base: str):
         package_json = query_cask_json(package_name)
         package_rb = download_cask_rb(package_name)
 
+        url_packaged_based = f'{new_url_base}/{package_name}'
+
+        package_rb = package_rb.replace('https://github.com/TermiT/Flycut/releases/download/#{version}',
+                                        url_packaged_based)
+        package_rb = package_rb.replace('https://github.com/jgraph/drawio-desktop/releases/download/v#{version}',
+                                        url_packaged_based)
+        package_rb = package_rb.replace('https://github.com/TermiT/Flycut/releases/download/#{version}',
+                                        url_packaged_based)
+        package_rb = package_rb.replace('https://github.com/audacity/audacity/releases/download/Audacity-#{version}',
+                                        url_packaged_based)
+        package_rb = package_rb.replace('https://www.charlesproxy.com/assets/release/#{version}', url_packaged_based)
+        package_rb = package_rb.replace('https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v#{version}',
+                                        url_packaged_based)
+        package_rb = package_rb.replace('https://desktop.docker.com/mac/main/#{arch}/#{version.csv.second}',
+                                        url_packaged_based)
+        package_rb = package_rb.replace(
+            'https://download-installer.cdn.mozilla.net/pub/firefox/releases/#{version}/mac/#{language}',
+            url_packaged_based)
+        package_rb = package_rb.replace(
+            'https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_#{version.csv.first}_build',
+            url_packaged_based)
+        package_rb = package_rb.replace('https://download.proxyman.io/#{version.csv.second}', url_packaged_based)
+        package_rb = package_rb.replace('https://github.com/rxhanson/Rectangle/releases/download/v#{version}',
+                                        url_packaged_based)
+        package_rb = package_rb.replace('https://get.videolan.org/vlc/#{version}/macosx', url_packaged_based)
+        package_rb = package_rb.replace('https://download3.vmware.com/software/FUS-#{version.csv.first.no_dots}',
+                                        url_packaged_based)
+
         assets = set()
         assets.add(package_json['url'])
         url_base = package_json['url'].rsplit('/', 1)[0]
@@ -44,11 +75,13 @@ def cli(output: str, prefix: str, new_url_base: str):
                 assets.add(url)
 
         package_rb = package_rb.replace(f'cask "{package_name}" do', f'cask "{prefix}{package_name}" do')
-        package_rb = package_rb.replace(url_base, new_url_base)
+        package_rb = package_rb.replace(url_base, url_packaged_based)
         (output / f'{prefix}{package_name}.rb').write_text(package_rb)
 
+        assets_dir = output / ASSETS_DIR / package_name
+
         for url in assets:
-            wget[url, '--directory-prefix', output, '--no-clobber'] & FG
+            wget[url, '--directory-prefix', assets_dir, '--no-clobber'] & FG
 
 
 if __name__ == '__main__':
