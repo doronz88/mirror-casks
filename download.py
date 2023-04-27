@@ -8,7 +8,7 @@ from plumbum import FG, local
 
 PACKAGES = ['pycharm-ce', 'emacs', 'sublime-text', 'rectangle', 'proxyman', 'flycut', 'wireshark', 'google-chrome',
             'firefox', 'drawio', 'audacity', 'microsoft-remote-desktop', 'vlc', 'cheatsheet', 'vmware-fusion',
-            'db-browser-for-sqlite', 'iterm2', 'docker', 'ghidra', 'charles']
+            'db-browser-for-sqlite', 'iterm2', 'docker', 'ghidra', 'charles', 'appcode', 'pycharm']
 
 wget = local['wget']
 
