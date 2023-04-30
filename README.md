@@ -5,12 +5,12 @@ Python3 utility for mirroring brew casks.
 # Usage
 
 ```
-Usage: download.py [OPTIONS] OUTPUT
-
-  Python3 utility for mirroring brew casks
+Usage: mirror-casks.py [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  --prefix TEXT        prefix downloaded packages
-  --new-url-base TEXT  what to replace the original URL base with
-  --help               Show this message and exit.
+  --help  Show this message and exit.
+
+Commands:
+  download  Download and patch brew casks
+  versions  Query brew casks versions
 ```

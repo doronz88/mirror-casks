@@ -31,6 +31,7 @@ def cli():
 
 @cli.command()
 def versions():
+    """ Query brew casks versions """
     for package_name in PACKAGES:
         package_json = query_cask_json(package_name)
         print(f'{package_name} {package_json["version"]}')
@@ -41,7 +42,7 @@ def versions():
 @click.option('--prefix', default='', help='prefix downloaded packages')
 @click.option('--new-url-base', default='PATCHED_BASE', help='what to replace the original URL base with')
 def download(output: str, prefix: str, new_url_base: str):
-    """ Python3 utility for mirroring brew casks """
+    """ Download and patch brew casks """
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     for package_name in PACKAGES:
