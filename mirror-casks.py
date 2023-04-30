@@ -62,7 +62,7 @@ def download(output: str, prefix: str, new_url_base: str):
         package_rb = package_rb.replace('https://www.charlesproxy.com/assets/release/#{version}', url_packaged_based)
         package_rb = package_rb.replace('https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v#{version}',
                                         url_packaged_based)
-        package_rb = package_rb.replace('https://desktop.docker.com/mac/main/#{arch}/#{version.csv.second}',
+        package_rb = package_rb.replace('https://desktop.docker.com/mac/main',
                                         url_packaged_based)
         package_rb = package_rb.replace(
             'https://download-installer.cdn.mozilla.net/pub/firefox/releases/#{version}/mac/#{language}',
@@ -75,6 +75,8 @@ def download(output: str, prefix: str, new_url_base: str):
                                         url_packaged_based)
         package_rb = package_rb.replace('https://get.videolan.org/vlc/#{version}/macosx', url_packaged_based)
         package_rb = package_rb.replace('https://download3.vmware.com/software/FUS-#{version.csv.first.no_dots}',
+                                        url_packaged_based)
+        package_rb = package_rb.replace('https://update.code.visualstudio.com',
                                         url_packaged_based)
 
         assets = set()
@@ -94,7 +96,15 @@ def download(output: str, prefix: str, new_url_base: str):
         assets_dir = output / ASSETS_DIR / package_name
 
         for url in assets:
-            wget[url, '--directory-prefix', assets_dir, '--no-clobber'] & FG
+            url_components = url.split('/')
+
+            # handle specific package directories where filename doesn't encode the arch and version
+            directory_prefix = assets_dir
+            if package_name == 'docker':
+                directory_prefix = assets_dir / url_components[-3] / url_components[-2]
+            elif package_name == 'visual-studio-code':
+                directory_prefix = assets_dir / url_components[-3] / url_components[-2]
+            wget[url, '--directory-prefix', directory_prefix, '--no-clobber'] & FG
 
 
 if __name__ == '__main__':
