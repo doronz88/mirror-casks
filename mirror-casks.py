@@ -24,11 +24,23 @@ def download_cask_rb(name: str) -> str:
     return requests.get(f'https://raw.githubusercontent.com/Homebrew/homebrew-cask/master/Casks/{name}.rb').text
 
 
-@click.command()
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
+def versions():
+    for package_name in PACKAGES:
+        package_json = query_cask_json(package_name)
+        print(f'{package_name} {package_json["version"]}')
+
+
+@cli.command()
 @click.argument('output', type=click.Path())
 @click.option('--prefix', default='', help='prefix downloaded packages')
 @click.option('--new-url-base', default='PATCHED_BASE', help='what to replace the original URL base with')
-def cli(output: str, prefix: str, new_url_base: str):
+def download(output: str, prefix: str, new_url_base: str):
     """ Python3 utility for mirroring brew casks """
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
