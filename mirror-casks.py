@@ -9,7 +9,7 @@ from plumbum import FG, local
 PACKAGES = ['pycharm-ce', 'emacs', 'sublime-text', 'rectangle', 'proxyman', 'flycut', 'wireshark', 'google-chrome',
             'firefox', 'drawio', 'audacity', 'microsoft-remote-desktop', 'vlc', 'cheatsheet', 'vmware-fusion',
             'db-browser-for-sqlite', 'iterm2', 'docker', 'ghidra', 'charles', 'appcode', 'pycharm', 'webstorm',
-            'typora', 'clion']
+            'typora', 'clion', 'visual-studio-code']
 
 ASSETS_DIR = 'assets'
 
@@ -54,8 +54,6 @@ def download(output: str, prefix: str, new_url_base: str):
         package_rb = package_rb.replace('https://github.com/TermiT/Flycut/releases/download/#{version}',
                                         url_packaged_based)
         package_rb = package_rb.replace('https://github.com/jgraph/drawio-desktop/releases/download/v#{version}',
-                                        url_packaged_based)
-        package_rb = package_rb.replace('https://github.com/TermiT/Flycut/releases/download/#{version}',
                                         url_packaged_based)
         package_rb = package_rb.replace('https://github.com/audacity/audacity/releases/download/Audacity-#{version}',
                                         url_packaged_based)
