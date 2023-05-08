@@ -6,11 +6,10 @@ import click
 import requests
 from plumbum import FG, local
 
-PACKAGES = ['pycharm-ce', 'emacs', 'sublime-text', 'rectangle', 'proxyman', 'flycut', 'wireshark', 'google-chrome',
-            'firefox', 'drawio', 'audacity', 'microsoft-remote-desktop', 'vlc', 'cheatsheet', 'vmware-fusion',
-            'db-browser-for-sqlite', 'iterm2', 'docker', 'ghidra', 'charles', 'appcode', 'pycharm', 'webstorm',
-            'typora', 'clion', 'visual-studio-code', 'temurin']
-
+PACKAGES = ['mattermost', 'pycharm-ce', 'emacs', 'sublime-text', 'rectangle', 'proxyman', 'flycut', 'wireshark',
+            'google-chrome', 'firefox', 'drawio', 'audacity', 'microsoft-remote-desktop', 'vlc', 'cheatsheet',
+            'vmware-fusion', 'db-browser-for-sqlite', 'iterm2', 'docker', 'ghidra', 'charles', 'appcode', 'pycharm',
+            'webstorm', 'typora', 'clion', 'visual-studio-code', 'temurin']
 ASSETS_DIR = 'assets'
 
 wget = local['wget']
@@ -76,8 +75,12 @@ def download(output: str, prefix: str, new_url_base: str):
                                         url_packaged_based)
         package_rb = package_rb.replace('https://update.code.visualstudio.com',
                                         url_packaged_based)
-        package_rb = package_rb.replace('https://github.com/adoptium/temurin#{version.major}-binaries/releases/download/jdk-#{version.csv.first}%2B#{version.csv.second}',
-                                        url_packaged_based)
+        package_rb = package_rb.replace(
+            'https://github.com/adoptium/temurin#{version.major}-binaries/releases/download/jdk-#{version.csv.first}%2B#{version.csv.second}',
+            url_packaged_based)
+        package_rb = package_rb.replace(
+            'https://releases.mattermost.com/desktop/#{version}',
+            url_packaged_based)
 
         assets = set()
         assets.add(package_json['url'])
