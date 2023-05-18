@@ -9,7 +9,7 @@ from plumbum import FG, local
 PACKAGES = ['mattermost', 'pycharm-ce', 'emacs', 'sublime-text', 'rectangle', 'proxyman', 'flycut', 'wireshark',
             'google-chrome', 'firefox', 'drawio', 'audacity', 'microsoft-remote-desktop', 'vlc', 'cheatsheet',
             'vmware-fusion', 'db-browser-for-sqlite', 'iterm2', 'docker', 'ghidra', 'charles', 'appcode', 'pycharm',
-            'webstorm', 'typora', 'clion', 'visual-studio-code', 'temurin']
+            'webstorm', 'typora', 'clion', 'visual-studio-code', 'temurin', 'izip', 'rar']
 ASSETS_DIR = 'assets'
 
 wget = local['wget']
