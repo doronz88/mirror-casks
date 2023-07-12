@@ -76,7 +76,8 @@ def download(output: str, prefix: str, new_url_base: str):
         package_rb = package_rb.replace('https://update.code.visualstudio.com',
                                         url_packaged_based)
         package_rb = package_rb.replace(
-            'https://github.com/adoptium/temurin#{version.major}-binaries/releases/download/jdk-#{version.csv.first}%2B#{version.csv.second}',
+            'https://github.com/adoptium/temurin#{version.major}-binaries/releases/download/jdk-#{version.csv.first}'
+            '%2B#{version.csv.second}',
             url_packaged_based)
         package_rb = package_rb.replace(
             'https://releases.mattermost.com/desktop/#{version}',
